@@ -1,0 +1,18 @@
+
+{% block content %}
+<h2>Teacher Home Page</h2>
+  <h1>Welcome, {{ user.username }}!</h1>
+  
+  <h2>Your Students:</h2>
+  <h1>Student Widget</h1>
+  <ul>
+    {% for student in students %}
+      <li>
+        <a href="{% url 'create_work' student.id %}">{{ student.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+<!-- Add content specific to the teacher's home page -->
+<a href="{% url 'student_widget' %}">Create Student</a>
+<!-- Include other links and widgets as needed -->
+{% endblock %}

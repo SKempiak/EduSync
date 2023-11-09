@@ -1,0 +1,10 @@
+
+{% block content %}
+<h2>Create/Edit Student Account</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<p><a href="{% url 'teacher_home' %}">Back to Teacher Home</a></p>
+{% endblock %}

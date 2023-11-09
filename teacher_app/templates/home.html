@@ -1,0 +1,33 @@
+{% block content %}
+    <h2>Welcome to the Teacher Portal</h2>
+    
+    <p>This is the homepage of EduSync. You can add your custom content and links here.</p>
+    
+    <p><a href="{% url 'registration_signup' %}">Sign up as a Teacher</a></p>
+    
+    <p><a href="{% url 'login' %}">Log in</a></p>
+    
+    <!-- Add more content and links as needed -->
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#open-student-form').click(function() {
+            $('#student-form-modal').show();
+        });
+
+        $('#student-form-modal form').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    // Handle success or error, e.g., close modal, update student list, etc.
+                    $('#student-form-modal').hide();
+                }
+            });
+        });
+    });
+</script>
