@@ -7,10 +7,8 @@
   <h1>Student Widget</h1>
   <ul>
     {% for student in students %}
-      <li>
-        <a href="{% url 'create_work' student.id %}">{{ student.name }}</a>
-      </li>
-    {% endfor %}
+    <p><a href="{% url 'student_detail' student_id=student.id %}">{{ student.name }}</a></p>
+{% endfor %}
   </ul>
 <!-- Add content specific to the teacher's home page -->
 <a href="{% url 'student_widget' %}">Create Student</a>

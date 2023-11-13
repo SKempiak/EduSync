@@ -21,3 +21,5 @@ class WorkForm(forms.ModelForm):
     class Meta:
         model = Work
         fields = ['title', 'description', 'grade']  # Adjust based on your Work model fields
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

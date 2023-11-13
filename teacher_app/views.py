@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 
 # Create your views here.
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from .forms import TeacherRegistrationForm, StudentForm, WorkForm
-from .models import Student
+from .models import Student, Assignment, Work
 from django.contrib.auth.decorators import login_required
 
 def register_teacher(request):
@@ -71,3 +71,55 @@ def create_work(request, student_id):
         form = WorkForm()
 
     return render(request, 'create_work.html', {'form': form, 'student': student})
+
+def student_detail(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    assignments = Assignment.objects.filter(student=student)
+
+    if request.method == 'POST':
+        form = WorkForm(request.POST)
+        if form.is_valid():
+            assignment = form.save(commit=False)
+            assignment.student = student
+            assignment.save()
+            return redirect('student_detail', student_id=student.id)
+    else:
+        form = WorkForm()
+
+    return render(request, 'student_detail.html', {'student': student, 'assignments': assignments, 'form': form})
+
+
+def student_detail(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    works = Work.objects.filter(student=student)
+
+    if request.method == 'POST':
+        form = WorkForm(request.POST)
+        if form.is_valid():
+            work = form.save(commit=False)
+            work.student = student
+            work.save()
+            return redirect('student_detail', student_id=student.id)
+    else:
+        form = WorkForm()
+
+    return render(request, 'student_detail.html', {'student': student, 'works': works, 'form': form})
+
+    return render(request, 'student_detail.html', {'student': student, 'works': works, 'form': form})
+
+def edit_assignment(request, assignment_id=None, student_id=None):
+    student = get_object_or_404(Student, id=student_id) if student_id else None
+    work = get_object_or_404(Work, id=assignment_id) if assignment_id else None
+
+    if request.method == 'POST':
+        form = WorkForm(request.POST, instance=work)
+        if form.is_valid():
+            work = form.save(commit=False)
+            work.student = student
+            work.save()
+            return redirect('student_detail', student_id=student.id)
+    else:
+        # If assignment_id is None, initialize an empty form for creating a new work
+        form = WorkForm(instance=work) if work else WorkForm()
+
+    return render(request, 'edit_assignment.html', {'form': form, 'work': work})

@@ -1,0 +1,9 @@
+<h1>Edit Assignment</h1>
+
+<form method="post" action="{% url 'edit_assignment' assignment_id=work.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+
+<a href="{% url 'student_detail' student_id=work.student.id %}">Back to Student Detail</a>

@@ -1,0 +1,16 @@
+<!-- student_detail.html -->
+<h1>{{ student.name }}</h1>
+
+<!-- Display existing assignments -->
+{% for work in works %}
+    <p>{{ work.title }} - <a href="{% url 'edit_assignment' assignment_id=work.id %}">Edit</a></p>
+{% endfor %}
+
+<!-- Form for creating a new assignment -->
+
+<h1>Create Work for {{ student.name }}</h1>
+<form method="post" action="{% url 'create_work' student.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Work</button>
+</form>
