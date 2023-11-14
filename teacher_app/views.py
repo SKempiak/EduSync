@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from .forms import TeacherRegistrationForm, StudentForm, WorkForm
 from .models import Student, Assignment, Work
 from django.contrib.auth.decorators import login_required
+from .ai import AIChatbot
 
 def register_teacher(request):
     if request.method == 'POST':
@@ -105,8 +106,6 @@ def student_detail(request, student_id):
 
     return render(request, 'student_detail.html', {'student': student, 'works': works, 'form': form})
 
-    return render(request, 'student_detail.html', {'student': student, 'works': works, 'form': form})
-
 def edit_assignment(request, assignment_id=None, student_id=None):
     student = get_object_or_404(Student, id=student_id) if student_id else None
     work = get_object_or_404(Work, id=assignment_id) if assignment_id else None
@@ -123,3 +122,19 @@ def edit_assignment(request, assignment_id=None, student_id=None):
         form = WorkForm(instance=work) if work else WorkForm()
 
     return render(request, 'edit_assignment.html', {'form': form, 'work': work})
+
+def class_summary(request):
+    students = Student.objects.filter(teacher=request.user)
+    works = Work.objects.all()
+    people = []
+    for i, student in enumerate(students):
+        people.append({})
+        people[i]["name"] = student.name
+        for work in works.filter(student=student):
+            people[i][work.title] = {"title": work.title, "description": work.description, "grade": work.grade}
+    ai = AIChatbot(people)
+    question = "Using the available data from overall grades, assignment grades, and text entries, provide a detailed analysis of each student's academic performance. Include insights into each student's overall progress and areas of consisten improvement or decline. Uncover any correlations between academic performance. Also include a summary of all of the students as a whole for their collective strengths and weaknesses and provide insights on what the class needs to improve on. Provide methods for a teacher to help the specific student or the class a whole perform better in specific areas. Refer to the teacher as \"you\" as if you were talking to the teacher. Make sure to block each section by student and have a final paragraph for the summary (each paragraph should be about a specific student or be a summary). Seaparate each person's analysis with exactly this : <br>"
+    response = ai.generate_response(question)
+    text = response["choices"][0]["message"]["content"]
+
+    return render(request, 'class_summary.html', {'text': text})
