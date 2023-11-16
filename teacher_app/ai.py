@@ -7,7 +7,7 @@ class AIChatbot:
         self.people = people
 
     def generate_response(self, question):
-        messages1 = [{"role": "system", "content": "You are an artificial intelligence that will be given data of how the students are doing in school. Your goal is to provide insights on each of the students and to provide areas of improvement for each student. Make sure to be specific and output what each student needs to work on. Provide a summary on all of the students as a class and what they may be doing well in and what they need to improve as a whole. The insights given should be interpreted from the data and the improvements needed should be things that the teacher can do to help the students."}]
+        messages1 = [{"role": "system", "content": "You are an artificial intelligence that will be given data of how a student is doing in school. You will be given grades on different assignments and their descriptions or what they decided to write for the assignment. Your goal is to provide insights on the student and to provide areas of improvement for the student. Make sure to be specific and output what the student needs to work on. The insights given should be interpreted from the data and the improvements needed should be activites or assignments that the teacher can do to help the student."}]
         for person in self.people:
             messages1.append({"role": "assistant", "content": "The below will be about " + person["name"]})
             for key in person:
