@@ -1,5 +1,2 @@
 # ai-for-teachers
-In teacher_project, create a python file called __init__.py
-Inside file:
-Import openai
-openai.api_key = 'YOUR_KEY'
+In the init.py file in teacher_project, enter a valid api key in the YOUR_KEY_HERE location for the code to work.
