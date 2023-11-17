@@ -7,7 +7,7 @@
   <h1>Student Widget</h1>
   <ul>
     {% for student in students %}
-    <p><a href="{% url 'student_detail' student_id=student.id %}">{{ student.name }}</a> - <a href="{% url 'summary' student_id=student.id %}">Create Summary</a></p>
+    <p><a href="{% url 'student_detail' student_id=student.id %}">{{ student.name }}</a> - <a href="{% url 'ai_review' student_id=student.id %}">Create AI Review</a></p>
     {% endfor %}
   </ul>
 <!-- Add content specific to the teacher's home page -->

@@ -123,7 +123,7 @@ def edit_assignment(request, assignment_id=None):
 
     return render(request, 'edit_assignment.html', {'form': form, 'work': work})
 
-def summary(request, student_id):
+def ai_review(request, student_id):
     student = get_object_or_404(Student, id=student_id) if student_id else None
     works = Work.objects.filter(student=student)
     people = [{}]
@@ -135,4 +135,4 @@ def summary(request, student_id):
     response = ai.generate_response(question)
     text = response["choices"][0]["message"]["content"]
 
-    return render(request, 'summary.html', {'student': student, 'text': text})
+    return render(request, 'ai_review.html', {'student': student, 'text': text})
