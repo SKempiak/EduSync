@@ -2,6 +2,8 @@
 {% block content %}
 <h2>AI Review of {{ student.name }}</h2>
 <p>{{ text }}</p>
+<br>
+<p>The Black line is the class average</p>
 {% autoescape off %}
 {{ plot_div }}
 {% endautoescape %}
