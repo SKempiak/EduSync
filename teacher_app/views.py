@@ -132,10 +132,10 @@ def ai_review(request, student_id):
     for work in works.filter(student=student):
         person[work.title] = {"title": work.title, "description": work.description, "grade": work.grade}
     if person.get('overall grade') is not None:
-        generate_graph(person)
+        plot_div = generate_graph(person)
     ai = AIChatbot([person])
     question = "Using the available data from overall grades, assignment grades, and text entries, provide a detailed analysis of the student's academic performance. Include insights into the student's overall progress and areas of consistent improvement or decline. Uncover any correlations between academic performance. Provide methods for a teacher to help the student perform better in specific areas. Refer to the teacher as \"you\" as if you were talking to the teacher. Identify any trends that appear with what the student consistently scores lower on or higher on. Provide multiple methods to help the student improve, learn, and have a more enjoyable experience as a student."
     response = ai.generate_response(question)
     text = response["choices"][0]["message"]["content"]
 
-    return render(request, 'ai_review.html', {'student': student, 'text': text, 'graphable': True if person.get('overall grade') is not None else False})
+    return render(request, 'ai_review.html', {'student': student, 'text': text, 'plot_div': plot_div})

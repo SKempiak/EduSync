@@ -2,9 +2,7 @@
 {% block content %}
 <h2>AI Review of {{ student.name }}</h2>
 <p>{{ text }}</p>
-{% if graphable %}
-{% with 'graphs/'|add:student.name|add:'.png' as image %}
-<img src="{% static image %}">
-{% endwith %}
-{% endif %}
+{% autoescape off %}
+{{ plot_div }}
+{% endautoescape %}
 {% endblock %}
