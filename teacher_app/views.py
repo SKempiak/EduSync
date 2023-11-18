@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from .forms import TeacherRegistrationForm, StudentForm, WorkForm
 from .models import Student, Assignment, Work
 from django.contrib.auth.decorators import login_required
+from .ai import AIChatbot
+from .graph import generate_graph
 
 def register_teacher(request):
     if request.method == 'POST':
@@ -105,11 +107,9 @@ def student_detail(request, student_id):
 
     return render(request, 'student_detail.html', {'student': student, 'works': works, 'form': form})
 
-    return render(request, 'student_detail.html', {'student': student, 'works': works, 'form': form})
-
-def edit_assignment(request, assignment_id=None, student_id=None):
-    student = get_object_or_404(Student, id=student_id) if student_id else None
+def edit_assignment(request, assignment_id=None):
     work = get_object_or_404(Work, id=assignment_id) if assignment_id else None
+    student = work.student
 
     if request.method == 'POST':
         form = WorkForm(request.POST, instance=work)
@@ -123,3 +123,19 @@ def edit_assignment(request, assignment_id=None, student_id=None):
         form = WorkForm(instance=work) if work else WorkForm()
 
     return render(request, 'edit_assignment.html', {'form': form, 'work': work})
+
+def ai_review(request, student_id):
+    student = get_object_or_404(Student, id=student_id) if student_id else None
+    works = Work.objects.filter(student=student)
+    person = {}
+    person["name"] = student.name
+    for work in works.filter(student=student):
+        person[work.title] = {"title": work.title, "description": work.description, "grade": work.grade}
+    if person.get('overall grade') is not None:
+        plot_div = generate_graph(person)
+    ai = AIChatbot([person])
+    question = "Using the available data from overall grades, assignment grades, and text entries, provide a detailed analysis of the student's academic performance. Include insights into the student's overall progress and areas of consistent improvement or decline. Uncover any correlations between academic performance. Provide methods for a teacher to help the student perform better in specific areas. Refer to the teacher as \"you\" as if you were talking to the teacher. Identify any trends that appear with what the student consistently scores lower on or higher on. Provide multiple methods to help the student improve, learn, and have a more enjoyable experience as a student."
+    response = ai.generate_response(question)
+    text = response["choices"][0]["message"]["content"]
+
+    return render(request, 'ai_review.html', {'student': student, 'text': text, 'plot_div': plot_div})

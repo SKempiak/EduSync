@@ -9,8 +9,10 @@
 <!-- Form for creating a new assignment -->
 
 <h1>Create Work for {{ student.name }}</h1>
+<p>Name the following "overall grade" (case sensitive) if you want comparisons of each grade with overall grade</p>
 <form method="post" action="{% url 'create_work' student.id %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Save Work</button>
 </form>
+<a href="{% url 'teacher_home' %}">Back to Teacher Home</a>
