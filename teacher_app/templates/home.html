@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edu Sync</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* Styling for the anchor tags to look like buttons */
+    .btn {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none; /* Removes underline from links */
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Background Image */
+    .bg-image {
+      /* Add your background image properties here */
+      /* For example: */
+      background-image: url('https://habitatbroward.org/wp-content/uploads/2020/01/10-Benefits-Showing-Why-Education-Is-Important-to-Our-Society.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh; /* Adjust as needed */
+    }
+
+    /* Main Content Container */
+    .content-container {
+      position: relative;
+      text-align: center;
+      color: white; /* Text color on top of the background image */
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      background-color: #333;
+      padding: 10px 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+    }
+
+    .navbar a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    /* Header */
+    h1 {
+      margin-top: 150px; /* Adjust as needed */
+      font-size: 3em;
+    }
+
+    p {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Image -->
+  <div class="bg-image"></div>
+
+  <!-- Main Content Container -->
+  <div class="content-container">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <a id="loginBtn" class="btn" href="/login">Login</a>
+      <a id="registerBtn" class="btn" href="/signup">Register</a>
+    </div>
+    <!-- Header -->
+    <h1>Edu Sync</h1>
+    <p>Welcome to Edu Sync, your portal for synchronized learning.</p>
+  </div>
+
+</body>
+</html>

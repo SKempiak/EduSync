@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Work for {{ student.name }}</title>
+    <style>
+        body {
+            background-image: url('https://www.educationstudent.org/uploads/7/7/8/5/77858120/education-pic_orig.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .form-box {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h1>Create Work for {{ student.name }}</h1>
+        <form method="post" action="{% url 'create_work' student.id %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Save Work</button>
+        </form>
+    </div>
+</body>
+</html>

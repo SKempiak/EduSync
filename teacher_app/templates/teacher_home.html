@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Home Page</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      z-index: -1;
+      overflow: hidden; /* Prevent content from overflowing the blurred background */
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      inset-inline-end: 0;
+      inset-block-end: 0;
+      background-image: url("https://img.freepik.com/free-vector/cartoon-hallway-corridor-with-many-doors-college-university-office-building_33099-1035.jpg?size=626&ext=jpg&ga=GA1.1.1826414947.1699056000&semt=ais");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      filter: blur(3.5px);
+      z-index: -1;
+    }
+
+    header {
+      background-color: #d32f2f; /* Red background */
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    .container {
+      max-inline-size: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #d32f2f; /* Red text color */
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff; /* White text color */
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-block-end: 10px;
+    }
+
+    a {
+      color: #d32f2f; /* Red link color */
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .create-student-link {
+      display: block;
+      text-align: center;
+      margin-block-start: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h2>Teacher Home Page</h2>
+  </header>
+
+  <div class="container">
+    <h1>Welcome, {{ user.username }}!</h1>
+    <h3>Your Students:</h3>
+    <ul>
+      {% for student in students %}
+      <li>
+        <p><a href="{% url 'student_detail' student_id=student.id %}">{{ student.name }}</a> - <a href="{% url 'ai_review' student_id=student.id %}">Create AI Review</a></p>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <a href="{% url 'student_widget' %}" class="create-student-link">Create Student</a>
+  </div>
+</body>
+
+</html>
+
+
+
+
